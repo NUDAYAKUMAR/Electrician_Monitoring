@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Dashboard — ElecPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; }
+        nav { background: #1a1a2e; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+        nav .logo { color: #e94560; font-size: 1.3rem; font-weight: bold; text-decoration: none; }
+        nav a { color: #ccc; text-decoration: none; margin-left: 16px; font-size: .9rem; }
+        nav a:hover { color: #fff; }
+        .content { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        h1 { margin-bottom: 6px; color: #1a1a2e; }
+        p.sub { color: #888; margin-bottom: 24px; }
+        .section-title { font-size: 1.1rem; font-weight: bold; margin: 24px 0 12px; color: #1a1a2e; }
+        .cards { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 30px; }
+        .card { background: #fff; padding: 18px 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.07); flex: 1; min-width: 180px; }
+        .card h3 { font-size: 1rem; color: #1a1a2e; margin-bottom: 4px; }
+        .card p { font-size: .85rem; color: #888; }
+        .card .skill { display: inline-block; background: #e94560; color: #fff; padding: 2px 9px; border-radius: 10px; font-size: .75rem; margin-top: 6px; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+        th { background: #1a1a2e; color: #fff; padding: 12px 14px; text-align: left; font-size: .85rem; }
+        td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; font-size: .9rem; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: .78rem; font-weight: bold; }
+        .badge-pending     { background: #fff3cd; color: #856404; }
+        .badge-in_progress { background: #cce5ff; color: #004085; }
+        .badge-completed   { background: #d4edda; color: #155724; }
+        .readonly-note { background: #e8f4fd; border-left: 4px solid #3498db; padding: 10px 16px; border-radius: 6px; margin-bottom: 24px; font-size: .9rem; color: #2980b9; }
+    </style>
+</head>
+<body>
+<nav>
+    <a class="logo" href="/user/dashboard">⚡ ElecPro</a>
+    <div>
+        <a href="/electricians">Electricians</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout" style="color:#e94560;">Logout</a>
+    </div>
+</nav>
+
+<div class="content">
+    <h1>Welcome, {{ session['user_name'] }}! 👋</h1>
+    <p class="sub">Here's an overview of our electrician team and recent jobs.</p>
+
+    <div class="readonly-note">ℹ️ You have <strong>read-only</strong> access. Contact an admin to request changes.</div>
+
+    <!-- Electrician Team -->
+    <div class="section-title">⚡ Our Electrician Team</div>
+    <div class="cards">
+        {% for elec in electricians %}
+        <div class="card">
+            <h3>{{ elec['name'] }}</h3>
+            <p>📞 {{ elec['phone'] or 'N/A' }}</p>
+            <p>✉️ {{ elec['email'] or 'N/A' }}</p>
+            {% if elec['skill'] %}<span class="skill">{{ elec['skill'] }}</span>{% endif %}
+        </div>
+        {% else %}
+        <p style="color:#888;">No electricians registered yet.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Recent Jobs -->
+    <div class="section-title">🔧 Recent Jobs</div>
+    <table>
+        <thead>
+            <tr><th>#</th><th>Title</th><th>Description</th><th>Status</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job['id'] }}</td>
+                <td>{{ job['title'] }}</td>
+                <td>{{ job['description'] or '—' }}</td>
+                <td><span class="badge badge-{{ job['status'] }}">{{ job['status'].replace('_',' ').title() }}</span></td>
+                <td>{{ job['created_at'] }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" style="text-align:center;color:#888;">No jobs yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register — ElecPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: #fff; padding: 38px 32px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.12); width: 100%; max-width: 450px; }
+        .logo { text-align: center; margin-bottom: 20px; font-size: 1.6rem; font-weight: bold; color: #e94560; }
+        h2 { text-align: center; margin-bottom: 6px; color: #1a1a2e; }
+        p.sub { text-align: center; color: #888; margin-bottom: 24px; font-size: .9rem; }
+        label { display: block; margin-bottom: 5px; font-size: .9rem; font-weight: bold; }
+        input, select { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 16px; font-size: .95rem; }
+        input:focus, select:focus { outline: none; border-color: #e94560; }
+        .btn { width: 100%; padding: 12px; background: #e94560; color: #fff; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; }
+        .btn:hover { background: #c73652; }
+        .links { text-align: center; margin-top: 16px; font-size: .9rem; color: #666; }
+        .links a { color: #e94560; text-decoration: none; }
+        .alert { padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; font-size: .9rem; }
+        .alert-danger  { background: #ffe0e6; color: #c0392b; }
+        .alert-success { background: #e0ffe9; color: #1e8449; }
+        .alert-warning { background: #fff3cd; color: #856404; }
+        /* Show/hide extra fields based on role */
+        #extra-fields { display: none; }
+    </style>
+    <script>
+        function toggleExtra() {
+            var role = document.getElementById('role').value;
+            document.getElementById('extra-fields').style.display =
+                (role === 'electrician') ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+<div class="card">
+    <div class="logo">⚡ ElecPro</div>
+    <h2>Create Account</h2>
+    <p class="sub">Fill in your details to get started</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST" action="/register">
+        <label for="role">Register As</label>
+        <select name="role" id="role" onchange="toggleExtra()" required>
+            <option value="user">👤 User / Client</option>
+            <option value="electrician">⚡ Electrician</option>
+            <option value="admin">🛡️ Admin</option>
+        </select>
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Min 6 characters" required>
+
+        <!-- Extra fields shown only for electrician role -->
+        <div id="extra-fields">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" placeholder="e.g. 9876543210">
+
+            <label for="skill">Skill / Specialization</label>
+            <input type="text" id="skill" name="skill" placeholder="e.g. Wiring, Panel Installation">
+        </div>
+
+        <button type="submit" class="btn">Create Account</button>
+    </form>
+
+    <div class="links">
+        Already have an account? <a href="/login">Sign in</a><br>
+        <a href="/" style="color:#888;margin-top:8px;display:inline-block;">← Back to Home</a>
+    </div>
+</div>
+</body>
+</html>

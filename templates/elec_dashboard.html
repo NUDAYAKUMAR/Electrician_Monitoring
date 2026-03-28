@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Dashboard — ElecPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; }
+        nav { background: #1a1a2e; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+        nav .logo { color: #e94560; font-size: 1.3rem; font-weight: bold; text-decoration: none; }
+        nav a { color: #ccc; text-decoration: none; margin-left: 16px; font-size: .9rem; }
+        nav a:hover { color: #fff; }
+        .content { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        h1 { margin-bottom: 6px; color: #1a1a2e; }
+        p.sub { color: #888; margin-bottom: 24px; }
+        .section-title { font-size: 1.1rem; font-weight: bold; margin: 24px 0 12px; color: #1a1a2e; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.07); margin-bottom: 30px; }
+        th { background: #1a1a2e; color: #fff; padding: 12px 14px; text-align: left; font-size: .85rem; }
+        td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; font-size: .9rem; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: .78rem; font-weight: bold; }
+        .badge-pending     { background: #fff3cd; color: #856404; }
+        .badge-in_progress { background: #cce5ff; color: #004085; }
+        .badge-completed   { background: #d4edda; color: #155724; }
+        .tip { background: #fff8e1; border-left: 4px solid #e94560; padding: 14px 18px; border-radius: 6px; margin-bottom: 24px; }
+    </style>
+</head>
+<body>
+<nav>
+    <a class="logo" href="/elec/dashboard">⚡ ElecPro</a>
+    <div>
+        <a href="/jobs">Jobs</a>
+        <a href="/tasks">Tasks</a>
+        <a href="/materials">Materials</a>
+        <a href="/reports">Reports</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout" style="color:#e94560;">Logout</a>
+    </div>
+</nav>
+
+<div class="content">
+    <h1>My Dashboard ⚡</h1>
+    <p class="sub">Hello {{ session['user_name'] }}! Here are your assigned jobs and tasks.</p>
+
+    <div class="tip">⚡ Ready to work? Check your assigned jobs and tasks below. Keep progress updated!</div>
+
+    <!-- My Jobs -->
+    <div class="section-title">🔧 My Assigned Jobs</div>
+    <table>
+        <thead>
+            <tr><th>#</th><th>Job Title</th><th>Description</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            {% for job in my_jobs %}
+            <tr>
+                <td>{{ job['id'] }}</td>
+                <td>{{ job['title'] }}</td>
+                <td>{{ job['description'] or '—' }}</td>
+                <td><span class="badge badge-{{ job['status'] }}">{{ job['status'].replace('_',' ').title() }}</span></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" style="text-align:center;color:#888;">No jobs assigned to you yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- My Tasks -->
+    <div class="section-title">✅ My Tasks</div>
+    <table>
+        <thead>
+            <tr><th>#</th><th>Task Description</th><th>Job</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            {% for task in my_tasks %}
+            <tr>
+                <td>{{ task['id'] }}</td>
+                <td>{{ task['description'] or '—' }}</td>
+                <td>{{ task['job_title'] or '—' }}</td>
+                <td><span class="badge badge-{{ task['status'] }}">{{ task['status'].replace('_',' ').title() }}</span></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" style="text-align:center;color:#888;">No tasks assigned to you yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

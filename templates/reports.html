@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports — ElecPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; }
+        nav { background: #1a1a2e; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+        nav .logo { color: #e94560; font-size: 1.3rem; font-weight: bold; text-decoration: none; }
+        nav a { color: #ccc; text-decoration: none; margin-left: 16px; font-size: .9rem; }
+        .content { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        h1 { margin-bottom: 24px; color: #1a1a2e; }
+        .stats { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 30px; }
+        .stat-card { background:#fff; padding: 20px 24px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,.08); flex: 1; min-width: 140px; border-left: 4px solid #e94560; }
+        .stat-card h3 { font-size: .8rem; color: #888; text-transform: uppercase; margin-bottom: 6px; }
+        .stat-card .num { font-size: 2rem; font-weight: bold; color: #1a1a2e; }
+        .section-title { font-size: 1.1rem; font-weight: bold; margin: 24px 0 12px; color: #1a1a2e; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+        th { background: #1a1a2e; color: #fff; padding: 12px 14px; text-align: left; font-size: .85rem; }
+        td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; font-size: .9rem; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: .78rem; font-weight: bold; }
+        .badge-pending     { background: #fff3cd; color: #856404; }
+        .badge-in_progress { background: #cce5ff; color: #004085; }
+        .badge-completed   { background: #d4edda; color: #155724; }
+    </style>
+</head>
+<body>
+<nav>
+    <a class="logo" href="/dashboard">⚡ ElecPro</a>
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/electricians">Electricians</a>
+        <a href="/jobs">Jobs</a>
+        <a href="/tasks">Tasks</a>
+        <a href="/materials">Materials</a>
+        <a href="/reports">Reports</a>
+        <a href="/logout" style="color:#e94560;">Logout</a>
+    </div>
+</nav>
+
+<div class="content">
+    <h1>📊 Reports &amp; Summary</h1>
+
+    <!-- Summary Stats -->
+    <div class="stats">
+        <div class="stat-card">
+            <h3>Total Jobs</h3>
+            <div class="num">{{ total_jobs }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>Pending</h3>
+            <div class="num" style="color:#856404;">{{ pending_jobs }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>In Progress</h3>
+            <div class="num" style="color:#004085;">{{ inprog_jobs }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>Completed</h3>
+            <div class="num" style="color:#155724;">{{ completed_jobs }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>Tasks</h3>
+            <div class="num">{{ total_tasks }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>Electricians</h3>
+            <div class="num">{{ total_elec }}</div>
+        </div>
+        <div class="stat-card">
+            <h3>Materials</h3>
+            <div class="num">{{ total_materials }}</div>
+        </div>
+    </div>
+
+    <!-- All Jobs -->
+    <div class="section-title">📋 All Jobs Detail</div>
+    <table>
+        <thead>
+            <tr><th>#</th><th>Title</th><th>Description</th><th>Status</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+            {% for job in all_jobs %}
+            <tr>
+                <td>{{ job['id'] }}</td>
+                <td>{{ job['title'] }}</td>
+                <td>{{ job['description'] or '—' }}</td>
+                <td><span class="badge badge-{{ job['status'] }}">{{ job['status'].replace('_',' ').title() }}</span></td>
+                <td>{{ job['created_at'] }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" style="text-align:center;color:#888;">No records found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElecPro — Electrician Contractor Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Simple base styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f0f2f5; color: #333; }
+        nav { background: #1a1a2e; padding: 14px 30px; display: flex; justify-content: space-between; align-items: center; }
+        nav .logo { color: #e94560; font-size: 1.4rem; font-weight: bold; text-decoration: none; }
+        nav a { color: #ccc; text-decoration: none; margin-left: 18px; }
+        nav a:hover { color: #fff; }
+        .hero { background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fff; text-align: center; padding: 80px 20px; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 16px; }
+        .hero p  { font-size: 1.1rem; color: #bbb; margin-bottom: 30px; }
+        .btn { display: inline-block; padding: 12px 28px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 6px; }
+        .btn-primary { background: #e94560; color: #fff; }
+        .btn-outline { border: 2px solid #e94560; color: #e94560; background: transparent; }
+        .btn:hover { opacity: 0.85; }
+        .section { padding: 50px 30px; max-width: 1100px; margin: auto; }
+        .section h2 { text-align: center; margin-bottom: 30px; font-size: 1.6rem; }
+        .cards { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .card { background: #fff; padding: 24px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,.08); min-width: 220px; flex: 1; }
+        .card h3 { color: #e94560; margin-bottom: 10px; }
+        footer { background: #1a1a2e; color: #888; text-align: center; padding: 18px; font-size: .9rem; }
+    </style>
+</head>
+<body>
+<nav>
+    <a class="logo" href="/">⚡ ElecPro</a>
+    <div>
+        <a href="#features">Features</a>
+        <a href="#roles">Roles</a>
+        <a href="/login">Log In</a>
+        <a href="/register" style="background:#e94560;color:#fff;padding:8px 16px;border-radius:5px;">Get Started</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+    <h1>Manage Your Electrical Projects Smarter</h1>
+    <p>A unified platform for admins, electricians, and clients to manage jobs, tasks, materials, and reports.</p>
+    <a href="/register" class="btn btn-primary">Get Started Free</a>
+    <a href="/login"    class="btn btn-outline">Log In</a>
+</div>
+
+<!-- Features -->
+<div class="section" id="features">
+    <h2>Everything You Need to Run Efficiently</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>⚡ Electrician Management</h3>
+            <p>Add, manage, and track all electricians with specialization profiles.</p>
+        </div>
+        <div class="card">
+            <h3>🔧 Job Management</h3>
+            <p>Create and assign jobs with deadlines, priorities, and progress tracking.</p>
+        </div>
+        <div class="card">
+            <h3>✅ Task Tracking</h3>
+            <p>Break jobs into tasks, assign to workers, monitor progress.</p>
+        </div>
+        <div class="card">
+            <h3>📦 Materials Tracking</h3>
+            <p>Keep tabs on inventory levels and usage rates for active projects.</p>
+        </div>
+        <div class="card">
+            <h3>📊 Reports</h3>
+            <p>Generate work reports and task completion summaries in one click.</p>
+        </div>
+        <div class="card">
+            <h3>🔐 Role-Based Access</h3>
+            <p>Admin, Electrician, and User roles each see exactly what they need.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Roles -->
+<div class="section" id="roles" style="background:#fff;max-width:100%;padding:50px 30px;">
+    <div style="max-width:1100px;margin:auto;">
+        <h2>Three Roles, One Platform</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>🛡️ Admin</h3>
+                <p>Full access — manage electricians, jobs, tasks, materials, and reports.</p>
+                <ul style="margin-top:10px;padding-left:16px;">
+                    <li>Add / delete all data</li>
+                    <li>View all reports</li>
+                    <li>Manage users</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>⚡ Electrician</h3>
+                <p>View your assigned jobs and tasks, track your own progress.</p>
+                <ul style="margin-top:10px;padding-left:16px;">
+                    <li>View own jobs &amp; tasks</li>
+                    <li>No admin controls</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>👤 User / Client</h3>
+                <p>Browse electricians and track job statuses — read-only access.</p>
+                <ul style="margin-top:10px;padding-left:16px;">
+                    <li>View electrician profiles</li>
+                    <li>Track job statuses</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
