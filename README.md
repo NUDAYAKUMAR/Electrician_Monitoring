@@ -6,11 +6,25 @@ This project is a web-based application designed to manage electricians, assign 
 
 ---
 
+## 🤖 Development Approach
+
+This project was developed with the assistance of AI tools to accelerate development, improve code quality, and implement features efficiently.
+
+I actively guided the development process by:
+
+* Designing the project structure and features
+* Customizing UI/UX and functionality
+* Debugging and refining the code
+* Integrating frontend and backend components
+
+AI was used as a productivity tool, while all final decisions, modifications, and testing were done by me.
+
 ## 🚀 Features
 
 * 🔐 Role-based login (Admin, Electrician, User)
 * 📊 Admin dashboard with full access
 * 👷 Electrician task management
+* 🧑‍💼 Admin dashboard
 * 📝 Job assignment and tracking
 * 📦 Material and task monitoring
 
@@ -29,7 +43,7 @@ This project is a web-based application designed to manage electricians, assign 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/divyasumpagi-sketch/electrician-management-system.git
+   http://github.com/NUDAYAKUMAR/Electrician_Monitoring
    ```
 
 2. Navigate to the project folder:
@@ -100,4 +114,4 @@ electrician-management-system/
 
 ## 👨‍💻 Author
 
-Divya
+N Udayakumar
